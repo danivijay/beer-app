@@ -9,17 +9,29 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    beers: []
+    beers: [],
+    cart: []
   },
   mutations: {
     initBeers (state, payload) {
       this.state.beers = []
       const beers = payload
       this.state.beers = beers.map(function(el) {
-        var o = Object.assign({}, el);
-        o.inCart = false;
-        return o;
+        let o = Object.assign({}, el)
+        o.inCart = false
+        return o
       })
+    },
+    toggleCart(state, payload) {
+      let id = payload.id
+      if (state.cart.includes(id)) {
+        let index = state.cart.indexOf(id)
+        if (index > -1) {
+          state.cart.splice(index, 1)
+        }
+      } else {
+        state.cart.push(id)
+      }
     }
   },
   actions: {
@@ -32,6 +44,9 @@ export default new Vuex.Store({
       .catch(function (error) {
         throw error
       })
+    },
+    toggleCart ({commit}, payload) {
+      commit('toggleCart', payload)
     }
   },
   getters: {
@@ -40,6 +55,9 @@ export default new Vuex.Store({
     },
     getAllBeerStyles (state) {
       return new Set(state.beers.map(b => b.style ))
+    },
+    getCart (state) {
+      return state.cart
     }
   }
 })

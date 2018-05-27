@@ -50,8 +50,18 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat dark class="light-blue darken-1">
+            <v-btn
+              v-if="!allCart.includes(beer.id)"
+              @click.prevent="toggleCart(beer.id)"
+              flat dark
+              class="light-blue darken-1">
               <v-icon left>add</v-icon>Add to cart
+            </v-btn>
+            <v-btn
+              @click.prevent="toggleCart(beer.id)"
+              v-else
+              flat dark class="light-green darken-1">
+              <v-icon left>remove</v-icon>Remove from cart
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -99,6 +109,9 @@ export default {
     },
     noResults () {
       return this.showBeers.length <= 0
+    },
+    allCart () {
+      return this.$store.getters.getCart
     }
   },
   methods: {
@@ -165,6 +178,9 @@ export default {
         var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
         return result * sortOrder;
       }
+    },
+    toggleCart (id, val) {
+      this.$store.dispatch('toggleCart', { id })
     }
   },
   mounted () {
