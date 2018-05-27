@@ -22,7 +22,7 @@
         </v-btn>
       </v-flex>
     </v-layout>
-    <v-layout>
+    <v-layout row wrap>
       <v-flex xs12 class="text-xs-right">
         <v-btn flat @click.prevent="onSortByAbv">Sort by Alcohol content
           <v-icon right v-if="sortbyFlag.abv % 3 == 1">arrow_downward</v-icon>
@@ -146,19 +146,16 @@ export default {
     onSortByAbv () {
       let tempShowbeers = []
       this.sortbyFlag.abv += 1
-      console.log(this.sortbyFlag.abv)
       if (this.searchFlag) {
         tempShowbeers = this.showSearchedBeers
       }
       else {
         tempShowbeers = this.allBeers
       }
-      console.log(tempShowbeers)
       tempShowbeers = this.sortByAbv(tempShowbeers)
       this.showBeers = tempShowbeers.slice(0, this.tillItem)
     },
     sortByAbv (obj) {
-      console.log(obj)
       const tempAbv = parseInt(this.sortbyFlag.abv)
       if (tempAbv %3 == 1) {
         return obj.sort((a, b) => a.abv == b.abv ? 0 : +(a.abv > b.abv) || -1)
@@ -179,7 +176,7 @@ export default {
         return result * sortOrder;
       }
     },
-    toggleCart (id, val) {
+    toggleCart (id) {
       this.$store.dispatch('toggleCart', { id })
     }
   },
