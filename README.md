@@ -1,6 +1,6 @@
 # beer-app
 
-> A Vue.js project
+> A marketplace for beers.
 
 ## Build Setup
 
