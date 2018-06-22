@@ -1,6 +1,6 @@
 # beer-app
 
-> A marketplace for beers.
+> A marketplace for beers. Made with VueJS.
 
 ## Build Setup
 
